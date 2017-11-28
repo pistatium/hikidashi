@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Hikidashi
+  description: https://github.com/pistatium/hikidashi
+  version: 0.0.1
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+  /items:
+    get:
+      summary: get items list
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Items"
+
+  /items/{key}:
+    get:
+      summary: get item value
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+    put:
+      summary: put item
+      responses:
+        '201':
+          description: suceess
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    Items:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
