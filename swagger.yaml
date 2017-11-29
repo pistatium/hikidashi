@@ -32,6 +32,13 @@ paths:
   /items/{key}:
     get:
       summary: get item value
+      parameters:
+        - name: key
+          in: path
+          required: true
+          description: keyname
+          schema:
+            type: string
       responses:
         '200':
           description: success
@@ -41,6 +48,17 @@ paths:
                 $ref: "#/components/schemas/Item"
     put:
       summary: put item
+      parameters:
+        - name: key
+          in: path
+          required: true
+          description: keyname
+          schema:
+            type: string
+        - name: body
+          in: body
+          schema:
+            type: string
       responses:
         '201':
           description: suceess
