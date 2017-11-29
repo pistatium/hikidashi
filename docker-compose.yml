@@ -1,0 +1,19 @@
+version: '3'
+services:
+  env:
+    image: "python:3.6-slim"
+    links:
+      - dynamodb
+    environment:
+      - DEBUG=1
+      - DYNAMODB_HOST=dynamodb
+    volumes:
+      - .:/opt/hikidashi
+    command: /bin/bash -c "cd /opt/hikidashi && pip install -r requirements.txt && pip install -e . && hikidashi runserver"
+  dynamodb:
+    image: "tray/dynamodb-local"
+    command: -dbPath /var/lib/dynamodb -sharedDb
+    volumes:
+      - dynamodb-volume:/var/lib/dynamodb
+volumes:
+  dynamodb-volume:
