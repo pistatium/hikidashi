@@ -21,7 +21,7 @@ def index(path):
 
 @app.route('/health')
 def health():
-    return jsonify({'status': 200})
+    return jsonify({'status': 'ok'})
 
 
 @app.route('/items')
