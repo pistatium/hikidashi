@@ -17,5 +17,5 @@ class Store(metaclass=ABCMeta):
         ...
 
     @abstractmethod
-    def put_item(self, key: str=None, value: str=None, item: Item=None):
+    def put_item(self, item: Item=None):
         ...
