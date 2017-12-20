@@ -8,3 +8,7 @@ class Item(NamedTuple):
     value: object
     created_at: int
     updated_at: int
+
+    def to_dict(self):
+        d = self._asdict()
+        return d
