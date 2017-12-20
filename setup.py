@@ -15,6 +15,11 @@ setup(
     package_dir={'': 'src'},
     install_requires=[
     ],
+    extras_require={
+        'test': [
+            'pytest==3.3.1',
+        ]
+    },
     entry_points={
         'console_scripts': [
             'hikidashi=hikidashi.cmd:main'
