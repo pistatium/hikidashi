@@ -6,13 +6,17 @@ services:
       - dynamodb
     environment:
       - DEBUG=1
-      - DYNAMODB_HOST=dynamodb
+      - DYNAMODB_ENDPOINT_URL=http://dynamodb:8000
+      - AWS_ACCESS_KEY_ID=dummy
+      - AWS_SECRET_ACCESS_KEY=dummy
+      - AWS_DEFAULT_REGION=ap-northeast-1
+    working_dir: /opt/hikidashi
     volumes:
       - .:/opt/hikidashi
-    command: /bin/bash -c "cd /opt/hikidashi && pip install -r requirements.txt && pip install -e . && hikidashi runserver"
+    command: /bin/bash -c "pip install -r requirements.txt && pip install -e .[test] && hikidashi runserver"
   dynamodb:
     image: "tray/dynamodb-local"
-    command: -dbPath /var/lib/dynamodb -sharedDb
+    command: -dbPath /var/lib/dynamodb -sharedDb -port 8000
     volumes:
       - dynamodb-volume:/var/lib/dynamodb
 volumes:
