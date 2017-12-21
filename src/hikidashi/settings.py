@@ -5,4 +5,7 @@ from os import environ
 
 SWAGGER_UI_HOST = environ.get('SWAGGER_UI_HOST')
 
-BACKEND = "dynamodb"
+BACKEND_NAME = 'dynamodb'
+BACKEND_CONF = {
+    'DYNAMODB_ENDPOINT_URL': environ.get('DYNAMODB_ENDPOINT_URL')
+}
