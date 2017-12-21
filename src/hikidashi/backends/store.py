@@ -1,9 +1,21 @@
 # coding: utf-8
 
 from typing import List
+from enum import Enum
 from abc import ABCMeta, abstractmethod
 
 from hikidashi.models.item import Item
+
+
+class Backends(Enum):
+    DYNAMODB = 'dynamodb'
+
+    @classmethod
+    def get_store(cls, backend: str, **kwargs) -> 'Store':
+        if backend == cls.DYNAMODB:
+            from .dynamo_store import DynamoStore
+            return DynamoStore(**kwargs)
+        raise NotImplemented
 
 
 class Store(metaclass=ABCMeta):
