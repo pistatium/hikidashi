@@ -4,10 +4,12 @@ from flask import Flask, jsonify
 from flask import Response
 import requests
 
-from hikidashi.settings import SWAGGER_UI_HOST
-
+from hikidashi.settings import SWAGGER_UI_HOST, BACKEND_NAME, BACKEND_CONF
+from hikidashi.backends.store import Backends
 
 app = Flask(__name__)
+
+store = Backends.get_store(backend=BACKEND_NAME, **BACKEND_CONF)
 
 
 @app.route('/', defaults={'path': ''})
@@ -26,12 +28,14 @@ def health():
 
 @app.route('/items')
 def list_items():
-    return jsonify()
+    return jsonify({
+        'items': [i.to_dict() for i in store.get_items()]
+    })
 
 
 @app.route('/items/<key>', methods=['GET'])
 def get_item(key):
-    return jsonify()
+    return jsonify(store.get_item(key).to_dict())
 
 
 @app.route('/items/<key>', methods=['PUT'])
