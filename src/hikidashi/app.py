@@ -35,7 +35,10 @@ def list_items():
 
 @app.route('/items/<key>', methods=['GET'])
 def get_item(key):
-    return jsonify(store.get_item(key).to_dict())
+    item = store.get_item(key)
+    if not item:
+        return jsonify({'error': 'item not found.'}), 404
+    return jsonify(item.to_dict())
 
 
 @app.route('/items/<key>', methods=['PUT'])
