@@ -12,7 +12,7 @@ class Backends(Enum):
 
     @classmethod
     def get_store(cls, backend: str, **kwargs) -> 'Store':
-        if backend == cls.DYNAMODB:
+        if backend == cls.DYNAMODB.value:
             from .dynamo_store import DynamoStore
             return DynamoStore(**kwargs)
         raise NotImplemented

@@ -7,5 +7,6 @@ SWAGGER_UI_HOST = environ.get('SWAGGER_UI_HOST')
 
 BACKEND_NAME = 'dynamodb'
 BACKEND_CONF = {
-    'DYNAMODB_ENDPOINT_URL': environ.get('DYNAMODB_ENDPOINT_URL')
+    'table_name': environ.get('DYNAMODB_TABLE_NAME'),
+    'endpoint_url': environ.get('DYNAMODB_ENDPOINT_URL')
 }

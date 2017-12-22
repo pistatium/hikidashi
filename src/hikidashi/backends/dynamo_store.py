@@ -27,7 +27,7 @@ class DynamoStore(Store):
         )
         if "Item" not in item:
             return None
-        return Item(**item['Item'])
+        return Item(**load_from_dynamo(item['Item']))
 
     def put_item(self, item: Item = None):
         self.table.put_item(
