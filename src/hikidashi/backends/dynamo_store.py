@@ -34,6 +34,9 @@ class DynamoStore(Store):
             Item=dump_to_dynamo(item.to_dict())
         )
 
+    def truncate(self):
+        self.table.delete()
+
 
 def check_table_exists(dynamodb, table_name):
     tables = [t.name for t in dynamodb.tables.all()]

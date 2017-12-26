@@ -9,7 +9,7 @@ import click
 from .app import create_app
 
 from hikidashi.settings import BACKEND_NAME, BACKEND_CONF
-
+from hikidashi.backends.store import Backends
 
 handler = StreamHandler(sys.stdout)
 logger = getLogger(dirname(__name__))
@@ -27,7 +27,8 @@ def cmd():
 @click.option('--port', type=int, default='8000')
 @click.option('--host', default='0.0.0.0')
 def runserver(host, port, debug):
-    app = create_app(BACKEND_NAME, **BACKEND_CONF)
+    store = Backends.get_store(BACKEND_NAME, **BACKEND_CONF)
+    app = create_app(store)
     if debug:
         app.debug = True
         handler.setLevel(DEBUG)

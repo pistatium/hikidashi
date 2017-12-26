@@ -31,3 +31,7 @@ class Store(metaclass=ABCMeta):
     @abstractmethod
     def put_item(self, item: Item=None):
         ...
+
+    @abstractmethod
+    def truncate(self):
+        ...

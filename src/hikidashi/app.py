@@ -3,12 +3,9 @@
 from flask import Flask
 from flask import g
 
-from hikidashi.backends.store import Backends
 
-
-def create_app(backend_name, **backend_conf):
+def create_app(store):
     app = Flask(__name__)
-    store = Backends.get_store(backend=backend_name, **backend_conf)
 
     with app.app_context():
         g.store = store
