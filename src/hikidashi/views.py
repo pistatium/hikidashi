@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from flask import current_app, Blueprint, jsonify, Response
+from flask import g, Blueprint, jsonify, Response
 import requests
 
 from hikidashi.settings import SWAGGER_UI_HOST
@@ -25,6 +25,7 @@ def health():
 
 @api.route('/items')
 def list_items():
+    print(g.get('store'))
     return jsonify({
         'items': [i.to_dict() for i in g.store.get_items()]
     })
