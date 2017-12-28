@@ -1,10 +1,10 @@
 # coding: utf-8
 
-from flask import g, Blueprint, jsonify, Response
+from flask import g, Blueprint, jsonify, request, Response
 import requests
 
 from hikidashi.settings import SWAGGER_UI_HOST
-
+from hikidashi.models.item import Item
 
 api = Blueprint('api', __name__)
 
@@ -41,4 +41,6 @@ def get_item(key):
 
 @api.route('/items/<key>', methods=['PUT'])
 def put_item(key):
-    return jsonify()
+    item = Item(key=key, value=request.data.decode('utf-8'))
+    g.store.put_item(item)
+    return jsonify(item.to_dict()), 201

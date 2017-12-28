@@ -28,14 +28,14 @@ def client() -> FlaskClient:
     store.truncate()
 
 
-def test_get_empty_item_view(client: FlaskClient):
+def test_get_empty_items_view(client: FlaskClient):
     res = client.get('/items')
     assert res.status_code == 200
     data = json.loads(res.data.decode())
     assert data['items'] == []
 
 
-def test_get_item_view(client: FlaskClient):
+def test_get_items_view(client: FlaskClient):
     store = get_test_store()
     store.put_item(Item(key='key', value='value'))
 
@@ -45,3 +45,29 @@ def test_get_item_view(client: FlaskClient):
     assert data['items'][0]['key'] == 'key'
     assert data['items'][0]['value'] == 'value'
 
+
+def test_put_item_view(client: FlaskClient):
+    res = client.put('/items/key', data='value')
+    assert res.status_code == 201
+    data = json.loads(res.data.decode())
+    assert data['key'] == 'key'
+    assert data['value'] == 'value'
+
+    store = get_test_store()
+    assert store.get_item('key').value == 'value'
+
+
+def test_get_item_view(client: FlaskClient):
+    store = get_test_store()
+    store.put_item(Item(key='key', value='value'))
+
+    res = client.get('/items/key')
+    assert res.status_code == 200
+    data = json.loads(res.data.decode())
+    assert data['key'] == 'key'
+    assert data['value'] == 'value'
+
+
+def test_get_non_exists_item_view(client: FlaskClient):
+    res = client.get('/items/non_exists')
+    assert res.status_code == 404
