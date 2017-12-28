@@ -17,7 +17,10 @@ setup(
     ],
     extras_require={
         'test': [
-            'pytest==3.3.1',
+            'pytest',
+        ],
+        'server': [
+            'uwsgi'
         ]
     },
     entry_points={
